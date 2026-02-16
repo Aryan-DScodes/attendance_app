@@ -25,7 +25,7 @@ function AttendanceForm({ subject, date, onSubmit }) {
     setSaving(true);
     
     try {
-      const response = await fetch('http://localhost:8000/attendance', {
+      const response = await fetch('https://attendance-app1-3yv3.onrender.com/attendance', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

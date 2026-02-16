@@ -11,7 +11,7 @@ function Analytics() {
 
   const fetchAnalytics = async () => {
     try {
-      const response = await fetch('http://localhost:8000/analytics');
+      const response = await fetch('https://attendance-app1-3yv3.onrender.com/analytics');
       const data = await response.json();
       setAnalytics(data);
     } catch (error) {

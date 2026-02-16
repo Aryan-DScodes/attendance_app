@@ -12,7 +12,7 @@ function DailyAttendance() {
 
   const fetchSubjects = async () => {
     try {
-      const response = await fetch('http://localhost:8000/subjects');
+      const response = await fetch('https://attendance-app1-3yv3.onrender.com/subjects');
       const data = await response.json();
       setSubjects(data);
     } catch (error) {

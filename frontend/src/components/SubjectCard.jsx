@@ -5,7 +5,7 @@ function SubjectCard({ subject, onDelete }) {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/subjects/${subject.id}`, {
+      const response = await fetch(`https://attendance-app1-3yv3.onrender.com/subjects/${subject.id}`, {
         method: 'DELETE',
       });
       if (response.ok) {

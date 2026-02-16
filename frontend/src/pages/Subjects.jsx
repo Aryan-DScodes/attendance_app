@@ -13,7 +13,7 @@ function Subjects() {
 
   const fetchSubjects = async () => {
     try {
-      const response = await fetch('http://localhost:8000/subjects');
+      const response = await fetch('https://attendance-app1-3yv3.onrender.com/subjects');
       const data = await response.json();
       setSubjects(data);
     } catch (error) {
@@ -29,7 +29,7 @@ function Subjects() {
     if (!newSubject.trim()) return;
 
     try {
-      const response = await fetch('http://localhost:8000/subjects', {
+      const response = await fetch('https://attendance-app1-3yv3.onrender.com/subjects', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
