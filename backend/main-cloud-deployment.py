@@ -12,10 +12,10 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Attendance Tracker API")
 
-# CORS middleware
+# CORS middleware - UPDATED FOR CLOUD DEPLOYMENT
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Vite default port
+    allow_origins=["*"],  # Allow all origins for cloud deployment
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -244,6 +244,9 @@ def get_analytics(db: Session = Depends(get_db)):
         subject_stats=subject_stats
     )
 
+# UPDATED FOR CLOUD DEPLOYMENT
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    import os
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
