@@ -6,16 +6,30 @@ from datetime import date, datetime
 from pydantic import BaseModel
 import models
 from database import engine, get_db
+import os
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Create database tables
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Attendance Tracker API")
 
-# CORS middleware - UPDATED FOR CLOUD DEPLOYMENT
+@app.on_event("startup")
+def startup_event():
+    db_url = os.environ.get("DATABASE_URL", "NOT SET")
+    if db_url.startswith("postgresql"):
+        logger.info(f"✅ Using PostgreSQL database")
+    else:
+        logger.info(f"⚠️ WARNING: Using SQLite (ephemeral storage)")
+    logger.info(f"Database URL starts with: {db_url[:20]}...")
+
+# CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for cloud deployment
+    allow_origins=["*"],  # Allow all origins for deployment
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -244,7 +258,9 @@ def get_analytics(db: Session = Depends(get_db)):
         subject_stats=subject_stats
     )
 
-# UPDATED FOR CLOUD DEPLOYMENT
+# if __name__ == "__main__":
+#     import uvicorn
+#     uvicorn.run(app, host="0.0.0.0", port=8000)
 if __name__ == "__main__":
     import uvicorn
     import os
